@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="./scripts/app.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="/index.css" type="text/css"/>
+    <title>Bookshelf</title>
+</head>
+<body>
+
+    <div id="top-logo"><h1 class="display-1">Bookshelf</h1></div>
+
+    <div id="authorization-container" class="container hide">
+        <div class="row">
+            <div class="col">
+                <h2 class="display-6">New User? Sign Up</h2>
+                <form id="sign-up-form-container">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                        <input type="password" class="form-control" id="inputPassword" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+            <div class="col">
+            <h2 class="display-6">Sign In</h2>
+                <form id="sign-in-form-container">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                        <input type="email" class="form-control" placeholder="name@example.com"
+                            name="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                        <input type="password" class="form-control" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="book-display">
+
+        <div id="message-container"></div>
+
+        <form id="create-book-form">
+            <div class="mb-1 form-outline w-50">
+              <label for="title" class="form-label">Book Title</label>
+              <input type="text" class="form-control" name="title">
+            </div>
+            <div class="mb-1 form-outline w-50">
+              <label for="author" class="form-label">Author</label>
+              <input type="text" class="form-control" name="author">
+            </div>
+            <div class="mb-1 form-outline w-50">
+                <label for="note" class="form-label">Book Notes</label>
+                <textarea class="form-control" rows="1" name="note"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+
+        <div id="index-book-container">My Books:</div>
+        <div id="show-book-container">show book container</div>
+
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>
