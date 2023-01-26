@@ -3,7 +3,8 @@ import {
     createBook,
     showBook,
     updateBook,
-    deleteBook
+    deleteBook,
+    updateNote
 } from "./api.js"
 
 import {
@@ -76,10 +77,19 @@ showBookContainer.addEventListener("click", (event) => {
 
 
     //update note button
-// noteContainer.addEventListener("submit", (event) => {
-//     event.preventDefault()
-//     const 
-// })
+noteContainer.addEventListener("submit", (event) => {
+    event.preventDefault()
+    const id = event.target.getAttribute("data-id")
+    const noteData = {
+        note: {
+            content: event.target["note"].value,
+            bookId: book._id
+        }
+    }
+    updateNote(noteData, id)
+        .then(onUpdateBookSucess)
+        .then(onFailure)  
+})
 
 
     //delete note button

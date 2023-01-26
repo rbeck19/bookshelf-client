@@ -69,7 +69,6 @@ export const onShowBookSuccess = (book => {
             showBookContainer.appendChild(div)
         })
     }
-
 })
 
 export const onUpdateBookSucess = () => {
