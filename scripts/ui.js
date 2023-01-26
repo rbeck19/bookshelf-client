@@ -1,4 +1,4 @@
-
+//  ${book.notes[0].content}     displays content of array 0
 
 const messageContainer = document.querySelector("#message-container")
 const indexBookContainer = document.querySelector("#index-book-container")
@@ -30,17 +30,46 @@ export const onCreateBookSuccess = () => {
 
 export const onShowBookSuccess = (book => {
         //clears the container
-    // while(showBookContainer.firstChild){
-    //     showBookContainer.removeChild(showBookContainer.lastChild)
-    // }
+    while(showBookContainer.firstChild){
+        showBookContainer.removeChild(showBookContainer.lastChild)
+    }
+
     const div = document.createElement("div")
     div.innerHTML = 
         `
         <h3>${book.title}</h3>
         <p>${book.author}</p>
-        <p>${book.notes[0].content}</p>
+       
+
+        <form data-id="${book._id}">
+            <input type="text" name="title" value="${book.title}" />
+            <input type="text" name="author" value="${book.author}" />
+            <input type="submit" value="Update Book" />
+        </form>
+        <button data-id="${book._id}">Delete Book</button>
         `
     showBookContainer.appendChild(div)
+
+        //run through each note and create a div
+    if(book.notes.length == 0){
+        return ""
+    } else{
+        book.notes.forEach(note => {
+            const div = document.createElement("div")
+            div.setAttribute("class", "note-container")
+            div.innerHTML= 
+            `
+            <p>${note.content}</p>
+
+            <form data-id="${note._id}">
+            <input type="text" name="note" value="${note.content}" />
+            <input type="submit" value="Update Note" />
+            </form>
+            `
+            showBookContainer.appendChild(div)
+        })
+    }
+
 })
 
 export const onUpdateBookSucess = () => {
@@ -51,4 +80,3 @@ export const onDeleteBookSucess = () => {
     messageContainer.innerText = "Delete was successful"
 }
 
-//  ${book.notes[0].content}     displays content of array 0
