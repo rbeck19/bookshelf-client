@@ -3,6 +3,7 @@
 const messageContainer = document.querySelector("#message-container")
 const indexBookContainer = document.querySelector("#index-book-container")
 const showBookContainer = document.querySelector("#show-book-container")
+const notesContainer = document.querySelector("#notes-container")
 
 export const onIndexBooksSuccess = (books) => {
     books.forEach(book => {
@@ -29,9 +30,13 @@ export const onCreateBookSuccess = () => {
 }
 
 export const onShowBookSuccess = (book => {
-        //clears the container
+        //clears the show book container
     while(showBookContainer.firstChild){
         showBookContainer.removeChild(showBookContainer.lastChild)
+    }
+        //clears notes container
+    while(notesContainer.firstChild){
+        notesContainer.removeChild(notesContainer.lastChild)
     }
 
     const div = document.createElement("div")
@@ -56,17 +61,29 @@ export const onShowBookSuccess = (book => {
     } else{
         book.notes.forEach(note => {
             const div = document.createElement("div")
-            div.setAttribute("class", "note-container")
             div.innerHTML= 
             `
             <p>${note.content}</p>
 
-            <form data-id="${note._id}">
+            <form data-id="${note._id}" data-bookId="${book._id}">
             <input type="text" name="note" value="${note.content}" />
             <input type="submit" value="Update Note" />
             </form>
+            <button data-noteId="${note._id}" data-bookId="${book._id}">Delete Note</button>
             `
-            showBookContainer.appendChild(div)
+            notesContainer.appendChild(div)
+            // const form = document.createElement("form")
+            // form.classList.add("note-container")
+            // form.setAttribute("data-id",note._id)
+            // const noteInput = document.createElement("input")
+            // noteInput.setAttribute("name","note")
+            // noteInput.setAttribute("type","text")
+            // noteInput.setAttribute("value",note.content)
+            // const submitButton = document.createElement("button")
+            // submitButton.textContent = "Update Note"
+            // form.appendChild(noteInput)
+            // form.appendChild(submitButton)
+            // showBookContainer.appendChild(div)
         })
     }
 })

@@ -34,13 +34,33 @@ export const deleteBook = (id) => {
     })
 }
 
-export const updateNote = (data, id) => {
-    return fetch(`http://localhost:8000/notes/${id}`, {
+//------------- Note -------------
+
+export const createNote = (data) => {
+    return fetch(`http://localhost:8000/notes`, {
         method: "PATCH",
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json"
         },
         body: JSON.stringify(data)
+    })
+}
+
+export const updateNote = (data, noteId) => {
+    return fetch(`http://localhost:8000/notes/${noteId}`, {
+        method: "PATCH",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)    
+    })
+}
+
+export const deleteNote = (noteData, noteId) => {
+    return fetch(`http://localhost:8000/notes/${noteId}`, {
+        method: "DELETE",
+        body: JSON.stringify(noteData)
     })
 }

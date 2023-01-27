@@ -4,7 +4,8 @@ import {
     showBook,
     updateBook,
     deleteBook,
-    updateNote
+    updateNote,
+    deleteNote
 } from "./api.js"
 
 import {
@@ -19,7 +20,7 @@ import {
 const createBookForm = document.querySelector("#create-book-form")
 const indexBookContainer = document.querySelector("#index-book-container")
 const showBookContainer = document.querySelector("#show-book-container")
-const noteContainer = document.querySelector(".note-container")
+const notesContainer = document.querySelector("#notes-container")
     //list the books
 indexBooks()
     .then(res => res.json())
@@ -77,19 +78,33 @@ showBookContainer.addEventListener("click", (event) => {
 
 
     //update note button
-noteContainer.addEventListener("submit", (event) => {
+notesContainer.addEventListener("submit", (event) => {
     event.preventDefault()
+
     const id = event.target.getAttribute("data-id")
+    const bookId = event.target.getAttribute("data-bookId")
+
     const noteData = {
         note: {
             content: event.target["note"].value,
-            bookId: book._id
+            bookId: bookId
         }
     }
     updateNote(noteData, id)
         .then(onUpdateBookSucess)
-        .then(onFailure)  
+        .catch(onFailure)  
 })
 
 
     //delete note button
+notesContainer.addEventListener("click", (event) => {
+    const noteId =  event.target.getAttribute("data-noteId")
+    if(!noteId) return
+    const bookId = event.target.getAttribute("data-bookId")
+    const noteData = {
+        note: {
+            bookId: bookId
+        }
+    }
+    deleteNote(noteData, noteId)
+})
