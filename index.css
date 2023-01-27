@@ -12,3 +12,11 @@
 #authorization-container {
     margin-top: 20px;
 }
+#book-display{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#book-display-content{
+    width: 80%;
+}

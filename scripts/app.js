@@ -6,7 +6,9 @@ import {
     deleteBook,
     updateNote,
     deleteNote,
-    createNote
+    createNote,
+    signUp,
+    signIn
 } from "./api.js"
 
 import {
@@ -15,7 +17,9 @@ import {
     onCreateBookSuccess,
     onShowBookSuccess,
     onUpdateBookSucess,
-    onDeleteBookSucess
+    onDeleteBookSucess,
+    onSignUpSucess,
+    onSignInSucess
 } from "./ui.js"
 
 const createBookForm = document.querySelector("#create-book-form")
@@ -23,14 +27,16 @@ const indexBookContainer = document.querySelector("#index-book-container")
 const showBookContainer = document.querySelector("#show-book-container")
 const notesContainer = document.querySelector("#notes-container")
 const createNoteContainer = document.querySelector("#create-note-container")
+const signUpContainer = document.querySelector("#sign-up-form-container")
+const signInContainer = document.querySelector("#sign-in-form-container")
     //list the books
-indexBooks()
-    .then(res => res.json())
-    .then(res => {
-        //console.log(res)
-        onIndexBooksSuccess(res.books)
-    })
-    .catch(onFailure)
+// indexBooks()
+//     .then(res => res.json())
+//     .then(res => {
+//         //console.log(res)
+//         onIndexBooksSuccess(res.books)
+//     })
+//     .catch(onFailure)
     //create a new book
 createBookForm.addEventListener("submit", (event) => {
     event.preventDefault()
@@ -70,7 +76,8 @@ showBookContainer.addEventListener("submit", (event) => {
 })
     //delete book button
 showBookContainer.addEventListener("click", (event) => {
-    const id = event.target.getAttribute("data-id")
+    event.stopPropagation()
+    const id = event.target.getAttribute("data-bookid")
     if(!id) return
     deleteBook(id)
         .then(onDeleteBookSucess)
@@ -115,16 +122,46 @@ notesContainer.addEventListener("submit", (event) => {
 
     //delete note button
 notesContainer.addEventListener("click", (event) => {
+    event.stopPropagation()
     const noteId = event.target.getAttribute("data-noteId")
     if(!noteId) return
     const bookId = event.target.getAttribute("data-bookId")
-    const noteData = {
-        note: {
-            bookId: bookId
+ 
+    //console.log(noteData)
+    deleteNote(bookId, noteId)
+        .then(onDeleteBookSucess)
+        .catch(onFailure)
+})
+
+    //Sign Up
+signUpContainer.addEventListener("submit", (event) => {
+    event.preventDefault()
+    const userData = {
+        credentials: {
+            email: event.target["email"].value,
+            password: event.target["password"].value
         }
     }
-    console.log(noteData)
-    deleteNote(noteData, noteId)
-        .then(onDeleteBookSucess)
+    console.log(userData)
+    signUp(userData)
+        .then(onSignUpSucess)
+        .catch(onFailure)
+})
+
+    //Sign In
+signInContainer.addEventListener("submit", (event) => {
+    event.preventDefault()
+    const userData = {
+        credentials: {
+            email: event.target["email"].value,
+            password: event.target["password"].value
+        }
+    }
+    signIn(userData)
+        .then((res) => res.json())
+        .then((res) => onSignInSucess(res.token))
+        .then(indexBooks)
+        .then((res) => res.json())
+        .then((res) => onIndexBooksSuccess(res.books))
         .catch(onFailure)
 })

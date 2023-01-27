@@ -1,5 +1,38 @@
+import { store } from "./store.js"
+
+
+//---------- User ----------
+export const signUp = (data) => {
+	return fetch(`http://localhost:8000/sign-up`, {
+		method: 'POST',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(data),
+	})
+}
+
+export const signIn = (data) => {
+	return fetch(`http://localhost:8000/sign-in`, {
+		method: 'POST',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(data),
+	})
+}
+
+
+//--------- Book ------------
 export const indexBooks = () => {
-    return fetch(`http://localhost:8000/books`)
+    return fetch(`http://localhost:8000/books`,{
+        headers: {
+            'Authorization': `Bearer ${store.userToken}`
+        }
+    })
+    
 }
 
 export const createBook = (data) => {
@@ -7,14 +40,19 @@ export const createBook = (data) => {
         method: "POST",
         headers: {
             "Accept": "application/json",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${store.userToken}`
         },
         body: JSON.stringify(data)
     })
 }
 
 export const showBook = (id) => {
-    return fetch(`http://localhost:8000/books/${id}`)
+    return fetch(`http://localhost:8000/books/${id}`,{
+        headers: {
+            'Authorization': `Bearer ${store.userToken}`
+        }
+    })
 }
 
 export const updateBook = (data, id) => {
@@ -22,7 +60,8 @@ export const updateBook = (data, id) => {
         method: "PATCH",
         headers: {
             "Accept": "application/json",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${store.userToken}`
         },
         body: JSON.stringify(data)
     })
@@ -30,7 +69,10 @@ export const updateBook = (data, id) => {
 
 export const deleteBook = (id) => {
     return fetch(`http://localhost:8000/books/${id}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+            'Authorization': `Bearer ${store.userToken}`
+        }
     })
 }
 
@@ -58,9 +100,8 @@ export const updateNote = (data, noteId) => {
     })
 }
 
-export const deleteNote = (noteData, noteId) => {
-    return fetch(`http://localhost:8000/notes/${noteId}`, {
-        method: "DELETE",
-        body: JSON.stringify(noteData)
+export const deleteNote = (bookId, noteId) => {    
+    return fetch(`http://localhost:8000/notes/${noteId}/${bookId}`, {
+        method: "DELETE"
     })
 }
