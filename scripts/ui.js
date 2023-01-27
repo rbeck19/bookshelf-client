@@ -4,6 +4,7 @@ const messageContainer = document.querySelector("#message-container")
 const indexBookContainer = document.querySelector("#index-book-container")
 const showBookContainer = document.querySelector("#show-book-container")
 const notesContainer = document.querySelector("#notes-container")
+const createNoteContainer = document.querySelector("#create-note-container")
 
 export const onIndexBooksSuccess = (books) => {
     books.forEach(book => {
@@ -38,14 +39,16 @@ export const onShowBookSuccess = (book => {
     while(notesContainer.firstChild){
         notesContainer.removeChild(notesContainer.lastChild)
     }
-
+        //clear out note form container
+    while(createNoteContainer.firstChild){
+        createNoteContainer.removeChild(createNoteContainer.lastChild)
+    }
     const div = document.createElement("div")
     div.innerHTML = 
         `
         <h3>${book.title}</h3>
         <p>${book.author}</p>
        
-
         <form data-id="${book._id}">
             <input type="text" name="title" value="${book.title}" />
             <input type="text" name="author" value="${book.author}" />
@@ -57,7 +60,7 @@ export const onShowBookSuccess = (book => {
 
         //run through each note and create a div
     if(book.notes.length == 0){
-        return ""
+        //return ""
     } else{
         book.notes.forEach(note => {
             const div = document.createElement("div")
@@ -72,7 +75,38 @@ export const onShowBookSuccess = (book => {
             <button data-noteId="${note._id}" data-bookId="${book._id}">Delete Note</button>
             `
             notesContainer.appendChild(div)
-            // const form = document.createElement("form")
+        })
+    }
+  
+    const divCreateNote = document.createElement("div")
+    divCreateNote.innerHTML = 
+        `
+        <form data-createId="${book._id}">
+        <div class="mb-1 form-outline w-50">
+        <label for="content" class="form-label">Add A Note</label>
+        <input type="text" class="form-control" name="content">
+        </div>
+        <button data-createId="${book._id}" type="submit" class="btn btn-success">Create</button>
+        </form>
+        `
+    createNoteContainer.appendChild(divCreateNote)
+})
+
+export const onUpdateBookSucess = () => {
+    messageContainer.innerText = "Update was successful"
+}
+
+export const onDeleteBookSucess = () => {
+    messageContainer.innerText = "Delete was successful"
+}
+
+
+
+
+
+
+
+          // const form = document.createElement("form")
             // form.classList.add("note-container")
             // form.setAttribute("data-id",note._id)
             // const noteInput = document.createElement("input")
@@ -84,15 +118,3 @@ export const onShowBookSuccess = (book => {
             // form.appendChild(noteInput)
             // form.appendChild(submitButton)
             // showBookContainer.appendChild(div)
-        })
-    }
-})
-
-export const onUpdateBookSucess = () => {
-    messageContainer.innerText = "Update was successful"
-}
-
-export const onDeleteBookSucess = () => {
-    messageContainer.innerText = "Delete was successful"
-}
-

@@ -38,7 +38,7 @@ export const deleteBook = (id) => {
 
 export const createNote = (data) => {
     return fetch(`http://localhost:8000/notes`, {
-        method: "PATCH",
+        method: "POST",
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json"

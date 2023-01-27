@@ -5,7 +5,8 @@ import {
     updateBook,
     deleteBook,
     updateNote,
-    deleteNote
+    deleteNote,
+    createNote
 } from "./api.js"
 
 import {
@@ -21,11 +22,12 @@ const createBookForm = document.querySelector("#create-book-form")
 const indexBookContainer = document.querySelector("#index-book-container")
 const showBookContainer = document.querySelector("#show-book-container")
 const notesContainer = document.querySelector("#notes-container")
+const createNoteContainer = document.querySelector("#create-note-container")
     //list the books
 indexBooks()
     .then(res => res.json())
     .then(res => {
-        console.log(res)
+        //console.log(res)
         onIndexBooksSuccess(res.books)
     })
     .catch(onFailure)
@@ -74,8 +76,23 @@ showBookContainer.addEventListener("click", (event) => {
         .then(onDeleteBookSucess)
         .catch(onFailure)
 })
-    //create note button
 
+
+    //create note button
+createNoteContainer.addEventListener("submit", (event) => {
+    event.preventDefault()
+    const bookId = event.target.getAttribute("data-createId")
+    //if(!bookId) return
+    const noteData = {
+        note: {
+            content: event.target["content"].value,
+            bookId: bookId
+        }
+    }
+    createNote(noteData)
+        .then(onCreateBookSuccess)
+        .catch(onFailure)
+})
 
     //update note button
 notesContainer.addEventListener("submit", (event) => {
@@ -98,7 +115,7 @@ notesContainer.addEventListener("submit", (event) => {
 
     //delete note button
 notesContainer.addEventListener("click", (event) => {
-    const noteId =  event.target.getAttribute("data-noteId")
+    const noteId = event.target.getAttribute("data-noteId")
     if(!noteId) return
     const bookId = event.target.getAttribute("data-bookId")
     const noteData = {
@@ -106,5 +123,8 @@ notesContainer.addEventListener("click", (event) => {
             bookId: bookId
         }
     }
+    console.log(noteData)
     deleteNote(noteData, noteId)
+        .then(onDeleteBookSucess)
+        .catch(onFailure)
 })
