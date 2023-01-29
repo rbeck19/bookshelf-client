@@ -23,9 +23,8 @@ export const signIn = (data) => {
 		body: JSON.stringify(data),
 	})
 }
-
-
 //--------- Book ------------
+    //INDEX
 export const indexBooks = () => {
     return fetch(`http://localhost:8000/books`,{
         headers: {
@@ -34,7 +33,7 @@ export const indexBooks = () => {
     })
     
 }
-
+    //CREATE
 export const createBook = (data) => {
     return fetch(`http://localhost:8000/books`,{
         method: "POST",
@@ -46,7 +45,7 @@ export const createBook = (data) => {
         body: JSON.stringify(data)
     })
 }
-
+    //SHOW
 export const showBook = (id) => {
     return fetch(`http://localhost:8000/books/${id}`,{
         headers: {
@@ -54,7 +53,7 @@ export const showBook = (id) => {
         }
     })
 }
-
+    //UPDATE
 export const updateBook = (data, id) => {
     return fetch(`http://localhost:8000/books/${id}`, {
         method: "PATCH",
@@ -66,7 +65,7 @@ export const updateBook = (data, id) => {
         body: JSON.stringify(data)
     })
 }
-
+    //DELETE
 export const deleteBook = (id) => {
     return fetch(`http://localhost:8000/books/${id}`, {
         method: "DELETE",
@@ -75,9 +74,8 @@ export const deleteBook = (id) => {
         }
     })
 }
-
 //------------- Note -------------
-
+    //CREATE
 export const createNote = (data) => {
     return fetch(`http://localhost:8000/notes`, {
         method: "POST",
@@ -88,7 +86,7 @@ export const createNote = (data) => {
         body: JSON.stringify(data)
     })
 }
-
+    //UPDATE
 export const updateNote = (data, noteId) => {
     return fetch(`http://localhost:8000/notes/${noteId}`, {
         method: "PATCH",
@@ -99,7 +97,7 @@ export const updateNote = (data, noteId) => {
         body: JSON.stringify(data)    
     })
 }
-
+    //DELETE
 export const deleteNote = (bookId, noteId) => {    
     return fetch(`http://localhost:8000/notes/${noteId}/${bookId}`, {
         method: "DELETE"

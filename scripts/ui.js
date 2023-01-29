@@ -11,29 +11,21 @@ const authorizationContainer = document.querySelector("#authorization-container"
 const bookDisplay = document.querySelector("#book-display")
 
 export const onIndexBooksSuccess = (books) => {
+        //clear out the container
+    while(indexBookContainer.firstChild){
+        indexBookContainer.removeChild(indexBookContainer.lastChild)
+    }
     books.forEach(book => {
         const div = document.createElement("div")
         div.innerHTML = 
             `
             <h3>${book.title}</h3>
-            <button class="btn btn-primary" data-id=${book._id}>Display More</button>
+            <button class="btn btn-primary btn-sm" data-id=${book._id}>Display More</button>
             `
         indexBookContainer.appendChild(div)
     })
 }
-
-export const onFailure = (error) => {
-    messageContainer.innerHTML = 
-        `
-        <h3>You have an Error</h3>
-        <p>${error}</p> 
-        `
-}
-
-export const onCreateBookSuccess = () => {
-    messageContainer.innerText = "You have created a book"
-}
-
+    // SHOW Book and Note Information
 export const onShowBookSuccess = (book => {
         //clears the show book container
     while(showBookContainer.firstChild){
@@ -51,8 +43,8 @@ export const onShowBookSuccess = (book => {
     const div = document.createElement("div")
     div.innerHTML = 
         `
-        <h3>${book.title}</h3>
-        <p>${book.author}</p>
+        <h2 class="display-5">${book.title}</h2>
+        <h2 class="display-6">By: ${book.author}</h2>
        
         <form data-id="${book._id}">
             <div class="mb-1 form-outline w-50">
@@ -62,16 +54,13 @@ export const onShowBookSuccess = (book => {
             <div class="mb-1 form-outline w-50">
                 <label for="author" class="form-label">Author</label>
                 <input type="text" class="form-control" name="author" value="${book.author}">
-                <input type="submit" class="btn btn-info" value="Update"/>
-            </div>
-            
+                <input type="submit" class="btn btn-info btn-sm" value="Update Book"/>              
+            </div>            
         </form>
-        <button  class="btn btn-danger" data-bookid="${book._id}">Delete Book</button>
+        <button  class="btn btn-warning btn-sm" data-bookid="${book._id}">Delete Book</button>
             
         `
-            // <input type="text" name="title" value="${book.title}" />
-            // <input type="text" name="author" value="${book.author}" />
-            // <input class="btn btn-info" type="submit" value="Update Book" />
+
     showBookContainer.appendChild(div)
 
         //run through each note and create a div
@@ -82,16 +71,14 @@ export const onShowBookSuccess = (book => {
             const div = document.createElement("div")
             div.innerHTML= 
             `
-            <p>${note.content}</p>
-
+            <p class="lead">${note.content}</p>
             <form data-id="${note._id}" data-bookId="${book._id}">
                 <div class="mb-1 form-outline w-50">
                     <input type="text" name="note" class="form-control" value="${note.content}" />               
-                    <input class="btn btn-info" type="submit" value="Update Note" />        
+                    <input class="btn btn-info btn-sm" type="submit" value="Update Note" /> 
                 </div>    
             </form>
-            <button class="btn btn-danger" data-noteId="${note._id}" data-bookId="${book._id}">Delete Note</button>
-            
+            <button class="btn btn-warning btn-sm" data-noteId="${note._id}" data-bookId="${book._id}">Delete Note</button>              
             `
                 //div placed in and out of form to allow for single line button placement 
             notesContainer.appendChild(div)
@@ -102,34 +89,41 @@ export const onShowBookSuccess = (book => {
     divCreateNote.innerHTML = 
         `
         <form data-createId="${book._id}">
-        <div class="mb-1 form-outline w-50">
-        <label for="content" class="form-label">Add A Note</label>
-        <input type="text" class="form-control" name="content">
-        </div>
-        <button data-createId="${book._id}" type="submit" class="btn btn-success">Create</button>
+            <div class="mb-1 form-outline w-50">
+                <label for="content" class="form-label">Add A Note</label>
+                <input type="text" class="form-control" name="content">
+            </div>
+            <button data-createId="${book._id}" type="submit" class="btn btn-success">Create</button>
         </form>
         `
     createNoteContainer.appendChild(divCreateNote)
 })
-
+//------------ message container ----------
+export const onCreateBookSuccess = () => {
+    messageContainer.innerText = "You have created a book"
+}
 export const onUpdateBookSucess = () => {
     messageContainer.innerText = "Update was successful"
 }
-
 export const onDeleteBookSucess = () => {
     messageContainer.innerText = "Delete was successful"
 }
-
-//------- Sign-In - Sign-Up -------
-
+export const onFailure = (error) => {
+    messageContainer.innerHTML = 
+        `
+        <h3>You have an Error</h3>
+        <p>${error}</p> 
+        `
+}
+//------- Sign-In - Sign-Up ------------
 export const onSignUpSucess = () => {
     messageContainer.innerHTML = "You have created a new user."
 }
 export const onSignInSucess = (userToken) => {
     messageContainer.innerHTML = ""
     store.userToken = userToken
-    //authorizationContainer.classList.add("hide")
-    //bookDisplay.classList.add("hide")
+    authorizationContainer.classList.add("hide")
+    bookDisplay.classList.remove("vis")
 }
 
 
