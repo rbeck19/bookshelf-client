@@ -15,6 +15,17 @@ body {
     justify-content: center;
     align-items: center;
 }
+nav {
+    background-color: rgb(245, 179, 57);
+    text-align: center;
+}
+.myBooks {
+    text-align: center;
+}
+.signOut {
+   position: absolute;
+   right: 10px;
+}
 #authorization-container {
     margin-top: 20px;
 }
@@ -51,4 +62,10 @@ body {
     --bs-btn-disabled-color: #fff;
     --bs-btn-disabled-bg: rgb(138, 34, 34);
     --bs-btn-disabled-border-color: rgb(138, 34, 34);
+}
+span:hover {
+    cursor: pointer;
+}
+button.noteUD {
+    margin-bottom: 20px;
 }

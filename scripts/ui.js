@@ -1,6 +1,6 @@
 //  ${book.notes[0].content}     displays content of array 0
 
-import { store } from "./store.js"
+import { store, counter } from "./store.js"
 
 const messageContainer = document.querySelector("#message-container")
 const indexBookContainer = document.querySelector("#index-book-container")
@@ -27,6 +27,10 @@ export const onIndexBooksSuccess = (books) => {
 }
     // SHOW Book and Note Information
 export const onShowBookSuccess = (book => {
+        //create toggle counter for book update form and delete button  
+    counter.bookCount = 0 
+        //create toggle counter for note update form and delete button 
+    counter.noteCount = 0
         //clears the show book container
     while(showBookContainer.firstChild){
         showBookContainer.removeChild(showBookContainer.lastChild)
@@ -43,10 +47,10 @@ export const onShowBookSuccess = (book => {
     const div = document.createElement("div")
     div.innerHTML = 
         `
-        <h2 class="display-5">${book.title}</h2>
-        <h2 class="display-6">By: ${book.author}</h2>
+        <h2 class="display-5"><span>${book.title}</span></h2>
+        <h2 class="display-6"><span>By: ${book.author}<span></h2>
        
-        <form data-id="${book._id}">
+        <form data-id="${book._id}" class="bookUD hide">
             <div class="mb-1 form-outline w-50">
                 <label for="title" class="form-label">Book Title</label>
                 <input type="text" class="form-control" name="title" value="${book.title}">
@@ -57,12 +61,11 @@ export const onShowBookSuccess = (book => {
                 <input type="submit" class="btn btn-info btn-sm" value="Update Book"/>              
             </div>            
         </form>
-        <button  class="btn btn-warning btn-sm" data-bookid="${book._id}">Delete Book</button>
-            
+        <button  class="btn btn-warning btn-sm bookUD hide" data-bookid="${book._id}">Delete Book</button>            
         `
-
     showBookContainer.appendChild(div)
 
+    
         //run through each note and create a div
     if(book.notes.length == 0){
         //return ""
@@ -71,14 +74,14 @@ export const onShowBookSuccess = (book => {
             const div = document.createElement("div")
             div.innerHTML= 
             `
-            <p class="lead">${note.content}</p>
-            <form data-id="${note._id}" data-bookId="${book._id}">
+            <p class="lead"><span>${note.content}</span></p>
+            <form data-id="${note._id}" data-bookId="${book._id}" class="noteUD hide">
                 <div class="mb-1 form-outline w-50">
                     <input type="text" name="note" class="form-control" value="${note.content}" />               
                     <input class="btn btn-info btn-sm" type="submit" value="Update Note" /> 
                 </div>    
             </form>
-            <button class="btn btn-warning btn-sm" data-noteId="${note._id}" data-bookId="${book._id}">Delete Note</button>              
+            <button class="btn btn-warning btn-sm noteUD hide" data-noteId="${note._id}" data-bookId="${book._id}">Delete Note</button>              
             `
                 //div placed in and out of form to allow for single line button placement 
             notesContainer.appendChild(div)

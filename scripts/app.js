@@ -1,3 +1,4 @@
+import { counter } from "./store.js"
 import {
     indexBooks,
     createBook,
@@ -10,6 +11,7 @@ import {
     signUp,
     signIn
 } from "./api.js"
+import { store } from "./store.js"
 import {
     onIndexBooksSuccess,
     onFailure,
@@ -38,7 +40,6 @@ createBookForm.addEventListener("submit", (event) => {
         }
     }
     createBook(bookData)
-        .then(onCreateBookSuccess)
         .then(indexBooks)
         .then((res) => res.json())
         .then((res) => onIndexBooksSuccess(res.books))
@@ -63,9 +64,19 @@ showBookContainer.addEventListener("submit", (event) => {
             author: event.target["author"].value,
         }
     }
+        //update the book 
     updateBook(bookData, id)
-        .then(onUpdateBookSucess)
-        .then(() => console.log(bookData))
+            //redisplay the updated book
+        .then(() => {
+                //update the book list on screen
+            indexBooks()
+                .then((res) => res.json())
+                .then((res) => onIndexBooksSuccess(res.books))
+                //update the shown book with change made
+            showBook(id)
+                .then(res => res.json())
+                .then((res) => onShowBookSuccess(res.book))
+        })
         .catch(onFailure)
 })
     //DELETE Book button
@@ -74,8 +85,43 @@ showBookContainer.addEventListener("click", (event) => {
     const bookId = event.target.getAttribute("data-bookid")
     if(!bookId) return
     deleteBook(bookId)
-        .then(onDeleteBookSucess)
+        .then(() => {
+                //clears the show book container
+            while(showBookContainer.firstChild){
+                showBookContainer.removeChild(showBookContainer.lastChild)
+            }
+                //clears notes container
+            while(notesContainer.firstChild){
+                notesContainer.removeChild(notesContainer.lastChild)
+            }
+                //clear out note form container
+            while(createNoteContainer.firstChild){
+                createNoteContainer.removeChild(createNoteContainer.lastChild)
+            }
+                //update book list on screen
+            indexBooks()
+                .then((res) => res.json())
+                .then((res) => onIndexBooksSuccess(res.books))
+        })
         .catch(onFailure)
+})
+    //when clicking on Book title or author toggle display update and delete form
+showBookContainer.addEventListener("click", (event) => {
+    const title = event.target
+    if(title.tagName === "SPAN"){
+        const bookUDs = document.querySelectorAll(".bookUD")
+        if(counter.bookCount == 0) {
+            for(const bookUD of bookUDs){
+                bookUD.classList.remove("hide")
+                counter.bookCount += 1
+            } 
+        } else {
+            for(const bookUD of bookUDs){
+                bookUD.classList.add("hide")
+                counter.bookCount -= 1
+            } 
+        }      
+    }
 })
 //------------- NOTE Actions ------------------
     //CREATE Note button
@@ -90,7 +136,12 @@ createNoteContainer.addEventListener("submit", (event) => {
         }
     }
     createNote(noteData)
-        .then(onCreateBookSuccess)
+        .then(() => {
+                //after creating note update the book on screen 
+            showBook(noteData.note.bookId)
+                .then(res => res.json())
+                .then((res) => onShowBookSuccess(res.book))
+        })
         .catch(onFailure)
 })
     //UPDATE Note button
@@ -105,7 +156,11 @@ notesContainer.addEventListener("submit", (event) => {
         }
     }
     updateNote(noteData, id)
-        .then(onUpdateBookSucess)
+        .then(() => {
+            showBook(bookId)
+                .then(res => res.json())
+                .then((res) => onShowBookSuccess(res.book))
+        })
         .catch(onFailure)  
 })
     //DELETE Note button
@@ -115,8 +170,30 @@ notesContainer.addEventListener("click", (event) => {
     if(!noteId) return
     const bookId = event.target.getAttribute("data-bookId")
     deleteNote(bookId, noteId)
-        .then(onDeleteBookSucess)
+        .then(() => {
+            showBook(bookId)
+                .then(res => res.json())
+                .then((res) => onShowBookSuccess(res.book))
+        })
         .catch(onFailure)
+})
+    //when clicking on Book title or author toggle display update and delete form
+notesContainer.addEventListener("click", (event) => {
+    const title = event.target
+    if(title.tagName === "SPAN"){
+        const noteUDs = document.querySelectorAll(".noteUD")
+        if(counter.noteCount == 0) {
+            for(const noteUD of noteUDs){
+                noteUD.classList.remove("hide")
+                counter.noteCount += 1
+            } 
+        } else {
+            for(const noteUD of noteUDs){
+                noteUD.classList.add("hide")
+                counter.noteCount -= 1
+            } 
+        }           
+    }
 })
 //----------- User account -------------
     //Sign Up
