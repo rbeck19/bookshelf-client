@@ -3,7 +3,7 @@ import { store } from "./store.js"
 
 //---------- User ----------
 export const signUp = (data) => {
-	return fetch(`http://localhost:8000/sign-up`, {
+	return fetch(`https://afternoon-savannah-60673.herokuapp.com/sign-up`, {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
@@ -14,7 +14,7 @@ export const signUp = (data) => {
 }
 
 export const signIn = (data) => {
-	return fetch(`http://localhost:8000/sign-in`, {
+	return fetch(`https://afternoon-savannah-60673.herokuapp.com/sign-in`, {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
@@ -26,7 +26,7 @@ export const signIn = (data) => {
 //--------- Book ------------
     //INDEX
 export const indexBooks = () => {
-    return fetch(`http://localhost:8000/books`,{
+    return fetch(`https://afternoon-savannah-60673.herokuapp.com/books`,{
         headers: {
             'Authorization': `Bearer ${store.userToken}`
         }
@@ -35,7 +35,7 @@ export const indexBooks = () => {
 }
     //CREATE
 export const createBook = (data) => {
-    return fetch(`http://localhost:8000/books`,{
+    return fetch(`https://afternoon-savannah-60673.herokuapp.com/books`,{
         method: "POST",
         headers: {
             "Accept": "application/json",
@@ -47,7 +47,7 @@ export const createBook = (data) => {
 }
     //SHOW
 export const showBook = (id) => {
-    return fetch(`http://localhost:8000/books/${id}`,{
+    return fetch(`https://afternoon-savannah-60673.herokuapp.com/books/${id}`,{
         headers: {
             'Authorization': `Bearer ${store.userToken}`
         }
@@ -55,7 +55,7 @@ export const showBook = (id) => {
 }
     //UPDATE
 export const updateBook = (data, id) => {
-    return fetch(`http://localhost:8000/books/${id}`, {
+    return fetch(`https://afternoon-savannah-60673.herokuapp.com/books/${id}`, {
         method: "PATCH",
         headers: {
             "Accept": "application/json",
@@ -67,7 +67,7 @@ export const updateBook = (data, id) => {
 }
     //DELETE
 export const deleteBook = (id) => {
-    return fetch(`http://localhost:8000/books/${id}`, {
+    return fetch(`https://afternoon-savannah-60673.herokuapp.com/books/${id}`, {
         method: "DELETE",
         headers: {
             'Authorization': `Bearer ${store.userToken}`
@@ -77,7 +77,7 @@ export const deleteBook = (id) => {
 //------------- Note -------------
     //CREATE
 export const createNote = (data) => {
-    return fetch(`http://localhost:8000/notes`, {
+    return fetch(`https://afternoon-savannah-60673.herokuapp.com/notes`, {
         method: "POST",
         headers: {
             "Accept": "application/json",
@@ -88,7 +88,7 @@ export const createNote = (data) => {
 }
     //UPDATE
 export const updateNote = (data, noteId) => {
-    return fetch(`http://localhost:8000/notes/${noteId}`, {
+    return fetch(`https://afternoon-savannah-60673.herokuapp.com/notes/${noteId}`, {
         method: "PATCH",
         headers: {
             "Accept": "application/json",
@@ -99,7 +99,7 @@ export const updateNote = (data, noteId) => {
 }
     //DELETE
 export const deleteNote = (bookId, noteId) => {    
-    return fetch(`http://localhost:8000/notes/${noteId}/${bookId}`, {
+    return fetch(`https://afternoon-savannah-60673.herokuapp.com/notes/${noteId}/${bookId}`, {
         method: "DELETE"
     })
 }
