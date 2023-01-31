@@ -19,6 +19,9 @@ nav {
     background-color: rgb(245, 179, 57);
     text-align: center;
 }
+#message-container {
+    text-align: center;
+}
 .myBooks {
     text-align: center;
 }

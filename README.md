@@ -4,23 +4,25 @@ Bookshelf is where you can have your very own book tracker. Keep track of what b
 
 Your list of books and notes are only accesable to you.
 
-## Wireframe:
+## Screenshots:
 
-![Wireframe image](/images/Bookshelf-Wireframe.png)
-![ERD](/images/Bookshelf-ERD.png)
+![Home Page](/images/home-page.png)
+![Book List](/images/book-list.png)
+![Show One Book](/images/single-book.png)
+![One Book CRUD](/images/single-book-crud.png)
 
 ## Technologies Used:
 - HTML
 - CSS
-- bootstrap
+- Bootstrap
 - JavaScript
 - MongoDB
 - Mongoose
 - Express
-- cors
-- bycrpt
-- jsonwebtoken
-- passport
+- Cors
+- Bycrpt
+- Jsonwebtoken
+- Passport
 
 ## Getting Started:
 - Click [here](link) to go to Bookshelf
