@@ -14,14 +14,14 @@ import {
 import { store } from "./store.js"
 import {
     onIndexBooksSuccess,
-    onFailure,
-    onCreateBookSuccess,
+    onFailure,   
     onShowBookSuccess,
-    onUpdateBookSucess,
-    onDeleteBookSucess,
     onSignUpSucess,
     onSignInSucess
 } from "./ui.js"
+const navBar = document.querySelector("nav")
+const authorizationContainer = document.querySelector("#authorization-container")
+const bookDisplay = document.querySelector("#book-display")
 const createBookForm = document.querySelector("#create-book-form")
 const indexBookContainer = document.querySelector("#index-book-container")
 const showBookContainer = document.querySelector("#show-book-container")
@@ -29,6 +29,23 @@ const notesContainer = document.querySelector("#notes-container")
 const createNoteContainer = document.querySelector("#create-note-container")
 const signUpContainer = document.querySelector("#sign-up-form-container")
 const signInContainer = document.querySelector("#sign-in-form-container")
+const myBooksNav = document.querySelector(".myBooks")
+const signOutNav = document.querySelector(".signOut")
+//---------- Nav Bar Actions -----------------
+myBooksNav.addEventListener("click", (event) => {
+        //display create book form and book list
+    createBookForm.classList.remove("hide")
+    indexBookContainer.classList.remove("hide")
+        //hide show book and note
+    showBookContainer.classList.add("hide")    
+    notesContainer.classList.add("hide")
+    createNoteContainer.classList.add("hide")
+})
+signOutNav.addEventListener("click", (event) => {
+    navBar.classList.add("hide")
+    authorizationContainer.classList.remove("hide")
+    bookDisplay.classList.add("vis")
+})
 //---------- BOOK Actions --------------
     //CREATE a new book
 createBookForm.addEventListener("submit", (event) => {
@@ -49,6 +66,13 @@ createBookForm.addEventListener("submit", (event) => {
 indexBookContainer.addEventListener("click", (event) => {
     const id = event.target.getAttribute("data-id")
     if(!id) return
+        //hide books
+    createBookForm.classList.add("hide")
+    indexBookContainer.classList.add("hide")
+        //hide show book and note
+    showBookContainer.classList.remove("hide")    
+    notesContainer.classList.remove("hide")
+    createNoteContainer.classList.remove("hide")
     showBook(id)
         .then(res => res.json())
         .then((res) => onShowBookSuccess(res.book))
@@ -84,6 +108,13 @@ showBookContainer.addEventListener("click", (event) => {
     event.stopPropagation()
     const bookId = event.target.getAttribute("data-bookid")
     if(!bookId) return
+        //display creat book form ansd book list
+    createBookForm.classList.remove("hide")
+    indexBookContainer.classList.remove("hide")
+        //hide show book and note
+    showBookContainer.classList.add("hide")    
+    notesContainer.classList.add("hide")
+    createNoteContainer.classList.add("hide")
     deleteBook(bookId)
         .then(() => {
                 //clears the show book container
@@ -128,7 +159,9 @@ showBookContainer.addEventListener("click", (event) => {
 createNoteContainer.addEventListener("submit", (event) => {
     event.preventDefault()
     const bookId = event.target.getAttribute("data-createId")
-    //if(!bookId) return
+    if(event.target["content"].value === ""){
+        return
+    }
     const noteData = {
         note: {
             content: event.target["content"].value,

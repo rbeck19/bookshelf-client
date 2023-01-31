@@ -1,7 +1,5 @@
-//  ${book.notes[0].content}     displays content of array 0
-
 import { store, counter } from "./store.js"
-
+const navBar = document.querySelector("nav")
 const messageContainer = document.querySelector("#message-container")
 const indexBookContainer = document.querySelector("#index-book-container")
 const showBookContainer = document.querySelector("#show-book-container")
@@ -102,15 +100,6 @@ export const onShowBookSuccess = (book => {
     createNoteContainer.appendChild(divCreateNote)
 })
 //------------ message container ----------
-export const onCreateBookSuccess = () => {
-    messageContainer.innerText = "You have created a book"
-}
-export const onUpdateBookSucess = () => {
-    messageContainer.innerText = "Update was successful"
-}
-export const onDeleteBookSucess = () => {
-    messageContainer.innerText = "Delete was successful"
-}
 export const onFailure = (error) => {
     messageContainer.innerHTML = 
         `
@@ -127,6 +116,7 @@ export const onSignInSucess = (userToken) => {
     store.userToken = userToken
     authorizationContainer.classList.add("hide")
     bookDisplay.classList.remove("vis")
+    navBar.classList.remove("hide")
 }
 
 
