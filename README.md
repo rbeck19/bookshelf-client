@@ -25,7 +25,7 @@ Your list of books and notes are only accesable to you.
 - Passport
 
 ## Getting Started:
-- Click [here](link) to go to Bookshelf
+- Click [here](https://rbeck19.github.io/bookshelf-client/) to go to Bookshelf
 - instructions:
     - Create an account and than Sign In
     - Once Signed In, what you add is only accessible to you 
