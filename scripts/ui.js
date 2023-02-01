@@ -7,7 +7,7 @@ const notesContainer = document.querySelector("#notes-container")
 const createNoteContainer = document.querySelector("#create-note-container")
 const authorizationContainer = document.querySelector("#authorization-container")
 const bookDisplay = document.querySelector("#book-display")
-
+    //creates a list of book titles with a button attached to bookId
 export const onIndexBooksSuccess = (books) => {
         //clear out the container
     while(indexBookContainer.firstChild){
@@ -46,8 +46,7 @@ export const onShowBookSuccess = (book => {
     div.innerHTML = 
         `
         <h2 class="display-5"><span>${book.title}</span></h2>
-        <h2 class="display-6"><span>By: ${book.author}<span></h2>
-       
+        <h2 class="display-6"><span>By: ${book.author}<span></h2>       
         <form data-id="${book._id}" class="bookUD hide">
             <div class="mb-1 form-outline w-50">
                 <label for="title" class="form-label">Book Title</label>
@@ -61,12 +60,10 @@ export const onShowBookSuccess = (book => {
         </form>
         <button  class="btn btn-warning btn-sm bookUD hide" data-bookid="${book._id}">Delete Book</button>            
         `
-    showBookContainer.appendChild(div)
-
-    
+    showBookContainer.appendChild(div)    
         //run through each note and create a div
     if(book.notes.length == 0){
-        //return ""
+        // if notes is emtpy do nothing and return
     } else{
         book.notes.forEach(note => {
             const div = document.createElement("div")
@@ -80,12 +77,10 @@ export const onShowBookSuccess = (book => {
                 </div>    
             </form>
             <button class="btn btn-warning btn-sm noteUD hide" data-noteId="${note._id}" data-bookId="${book._id}">Delete Note</button>              
-            `
-                //div placed in and out of form to allow for single line button placement 
+            ` 
             notesContainer.appendChild(div)
         })
-    }
-  
+    }  
     const divCreateNote = document.createElement("div")
     divCreateNote.innerHTML = 
         `
@@ -118,17 +113,3 @@ export const onSignInSucess = (userToken) => {
     bookDisplay.classList.remove("vis")
     navBar.classList.remove("hide")
 }
-
-
-          // const form = document.createElement("form")
-            // form.classList.add("note-container")
-            // form.setAttribute("data-id",note._id)
-            // const noteInput = document.createElement("input")
-            // noteInput.setAttribute("name","note")
-            // noteInput.setAttribute("type","text")
-            // noteInput.setAttribute("value",note.content)
-            // const submitButton = document.createElement("button")
-            // submitButton.textContent = "Update Note"
-            // form.appendChild(noteInput)
-            // form.appendChild(submitButton)
-            // showBookContainer.appendChild(div)

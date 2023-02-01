@@ -1,6 +1,4 @@
 import { store } from "./store.js"
-
-
 //---------- User ----------
 export const signUp = (data) => {
 	return fetch(`http://localhost:8000/sign-up`, {

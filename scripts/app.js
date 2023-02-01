@@ -11,7 +11,6 @@ import {
     signUp,
     signIn
 } from "./api.js"
-import { store } from "./store.js"
 import {
     onIndexBooksSuccess,
     onFailure,   
@@ -259,13 +258,3 @@ signInContainer.addEventListener("submit", (event) => {
         .then((res) => onIndexBooksSuccess(res.books))
         .catch(onFailure)
 })
-
-
-    //list the books
-// indexBooks()
-//     .then(res => res.json())
-//     .then(res => {
-//         //console.log(res)
-//         onIndexBooksSuccess(res.books)
-//     })
-//     .catch(onFailure)
